@@ -1,5 +1,6 @@
 import  passport from 'passport'
 import localStrategy from "./passport.strategy/strategy.local"
+import JwtStrategy from "./passport.strategy/strategy.jwt"
 import {User, UserDocument} from "../authentication.model"
 
 
@@ -17,7 +18,8 @@ const customField: CustomField = {
 /* 
   *Initialization oif strategies
  */
-passport.use('localLogin', localStrategy)
+passport.use('localLogin', localStrategy);
+passport.use('jwt', JwtStrategy);
 
 
 

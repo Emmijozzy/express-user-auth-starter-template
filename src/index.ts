@@ -1,7 +1,7 @@
 import App from "./app"
 import *  as dotenv from  "dotenv";
 dotenv.config()
-import AuthRouter from "./components/Authentication/authentication.router";
+import AuthRouter from "./containers/Authentication/authentication.router";
 
 const app = new App(
     [

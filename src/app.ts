@@ -25,7 +25,7 @@ export default class App {
         this.initializeErrorHandling()
     }
 
-     private initializeMiddlewares = (): void => {
+    private initializeMiddlewares = (): void => {
         this.App.use(cors())
         this.App.use(helmet());
         this.App.use(compression())
@@ -52,5 +52,6 @@ export default class App {
     public init = (): void => {
         connectMongoDb()
                         .then(() => this.App.listen(this.port, () => console.log(`App is running port: ${this.port}`)))
+                        .catch((err) => console.log(err))
     }
 }

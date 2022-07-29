@@ -21,9 +21,6 @@ export interface UserDocument extends mongoose.Document {
     userName: string,
     picture: string
   }
-
-  isSubscribe: boolean
-
   comparePassword: comparePasswordFunction
 }
 
@@ -47,19 +44,8 @@ const userSchema = new mongoose.Schema<UserDocument>({
     userName: String,
     picture: String
   },
-  isSubscribe: {
-    type: Boolean,
-    default: false
-  }
-
 })
 
-
-const comparePassword: comparePasswordFunction = ( userPassword, userDataPassword, cd ) => {
-  bcrypt.compare(userPassword, userDataPassword, (err, isMatch: boolean): any => {
-    cd(<Error>err, isMatch)
-  })
-}
 /* 
   TODO: Assignment of compare password method
   */

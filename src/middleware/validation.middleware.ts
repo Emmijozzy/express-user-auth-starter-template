@@ -29,17 +29,20 @@ function validationMiddleware(schema: Joi.Schema): RequestHandler {
             req.body = value;
             next();
         } catch (e: any) {
-            console.log(e)
-            // const errors: string[] = [];
-            // e.details.forEach((error: Joi.ValidationErrorItem) => {
-            //     errors.push(error.message);
-            // });
+            let errors: string[] = [];
+             await e.details.forEach((error: Joi.ValidationErrorItem) => {
+                errors.push(String(error.message));
+            });
             
+            errors = await errors.map(error =>{
+                const newString = error.replace('[ref:password]', 'password');
+                console.log(newString)
+                return newString
+            } )
             // res.status(400).json({ errors: errors });
-            // next( new validationErrorException(errors.join(' \n '), 400))
+            next( new validationErrorException(errors.join(' \n '), 400))
         }
     };
 }
-
 
 export default validationMiddleware;

@@ -1,15 +1,9 @@
 // Dependencies
-import {User, UserDocument} from "../components/Authentication/authentication.model"
+import {User, UserDocument} from "../containers/Authentication/authentication.model"
 
 export type dataResponse = UserDocument | false | null | undefined
-
-type Lib = {
-  findUserByEmailAsync: (email: string) => Promise< dataResponse>
-}
-
-// initialization of lib container
-export const _data: Lib = {
-  findUserByEmailAsync: async (email: string) => {
+export default class Data {
+  static findUserByEmailAsync = async (email: string):Promise<dataResponse> => {
     try {
         const user = User.findOne({email: email});
         if(!user) {
@@ -21,8 +15,7 @@ export const _data: Lib = {
         }      
     } catch(err) {
       console.log(err)
+      return false
     }
   }
-};
-
-// export of module
+}

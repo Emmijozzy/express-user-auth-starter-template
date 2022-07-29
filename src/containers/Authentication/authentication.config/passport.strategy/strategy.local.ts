@@ -1,8 +1,8 @@
 import { User, UserDocument } from "../../authentication.model";
 import { Response } from "express";
 import LocalStrategy from 'passport-local'
-import {_data, dataResponse} from '../../../../utils/data'
-import _validatePassword from '../../../../utils/validatePassword'
+import Data from '../../../../utils/data'
+import _validatePassword from '../../../../utils/password'
 
 /* 
   * definition of customField interface
@@ -10,6 +10,15 @@ import _validatePassword from '../../../../utils/validatePassword'
   * declaration and definition of verifyCallback
   * creation of local strategy
    */
+interface UserData {
+  email: string;
+  password: string;
+  userProfile: {
+    firstName: string;
+    lastName: string;
+    userName: string;
+  }
+}
 
 interface CustomField {
   usernameField: string,
@@ -21,9 +30,9 @@ const customField: CustomField = {
   passwordField: 'password'
 }
 
-const verifyCallback =  async (email: string, password: string, done: (err: any, user:dataResponse ) => void ) => {
+const verifyCallback =  async (email: string, password: string, done: (err: any, user: UserData | false) => void ) => {
   try {
-    const user: dataResponse = await _data.findUserByEmailAsync(email).then( res => {return res });
+    const user = await Data.findUserByEmailAsync(email).then( res => {return res });
     console.log(user)
     if(!user){
       return done("This e-mail address is not associated with any account", false)
